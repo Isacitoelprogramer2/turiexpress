@@ -29,12 +29,7 @@ jobs:
       - name: Compilar Cloud Functions
         run: cd functions && npm run build
 
-      - name: Desplegar Hosting
-        run: firebase deploy --only hosting:turiexpress-site
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-
-      - name: Desplegar Cloud Functions
-        run: firebase deploy --only functions --debug
+      - name: Desplegar Hosting y Cloud Functions
+        run: firebase deploy --only hosting:turiexpress-site,functions:turiexpress
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
