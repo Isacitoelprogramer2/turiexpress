@@ -1,0 +1,31 @@
+# Configuración local de Claude Code
+.claude/
+
+# Dependencias y archivos de build (por si los agregas a futuro)
+node_modules/
+dist/
+build/
+.cache/
+
+# Variables de entorno (credenciales, claves de API, etc.)
+.env
+.env.local
+.env.*.local
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archivos temporales y de editores
+*.log
+*.tmp
+*.swp
+.vscode/
+.idea/
+
+# Caché local de Firebase CLI
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
