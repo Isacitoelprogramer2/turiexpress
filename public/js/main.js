@@ -108,7 +108,7 @@
   const status = document.getElementById('formStatus');
 
   async function sendReserva(data) {
-    const functionUrl = 'https://us-central1-balance-food-landing.cloudfunctions.net/enviarReserva';
+    const functionUrl = 'https://us-central1-balance-food-landing.cloudfunctions.net/enviarReservaTuriexpress';
     const response = await fetch(functionUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

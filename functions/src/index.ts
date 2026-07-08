@@ -37,7 +37,7 @@ function validarCampos(body: ReservaBody): string | null {
   return null;
 }
 
-export const enviarReserva = functions
+export const enviarReservaTuriexpress = functions
   .region('us-central1')
   .runWith({ secrets: [RESEND_API_KEY] })
   .https.onCall(async (data, context): Promise<{ ok: boolean; message: string }> => {
