@@ -158,13 +158,13 @@
         status.className = 'form-status error';
         return;
       }
-      if (!data.consulta || !String(data.consulta).trim()) {
-        status.textContent = '⚠ Cuéntanos qué información necesitas.';
+      if (!data.tour || !String(data.tour).trim()) {
+        status.textContent = '⚠ Selecciona un tour.';
         status.className = 'form-status error';
         return;
       }
 
-      status.textContent = '⏳ Enviando tu consulta...';
+      status.textContent = '⏳ Enviando tu reserva...';
       status.className = 'form-status';
 
       try {
@@ -172,10 +172,10 @@
           name: data.name,
           email: data.email,
           phone: data.phone,
-          consulta: data.consulta,
+          tour: data.tour,
         });
 
-        status.textContent = `✅ ${response.message || '¡Consulta enviada! Te contactaremos pronto.'}`;
+        status.textContent = `✅ ${response.message || '¡Reserva enviada! Te contactaremos pronto.'}`;
         status.className = 'form-status success';
         form.reset();
       } catch (err) {

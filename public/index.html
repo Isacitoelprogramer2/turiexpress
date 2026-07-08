@@ -250,7 +250,7 @@
       <div class="reserve-card reveal-up">
         <div class="reserve-info">
           <h2>Para <span class="text-accent">mayor</span> información</h2>
-          <p>Completa el formulario y coméntanos qué información adicional desea saber. ¡Será un placer escucharte!</p>
+          <p>Completa el formulario y te contactaremos en menos de 24 horas para confirmar tu reserva.</p>
           <ul class="reserve-perks">
             <li>✔ Confirma por WhatsApp</li>
             <li>✔ Paga al iniciar el tour</li>
@@ -271,16 +271,16 @@
             <input type="tel" id="phone" name="phone" placeholder="+51 999 999 999" required />
           </div>
           <div class="form-group">
-            <label for="consulta">Consulta</label>
-            <textarea
-              id="consulta"
-              name="consulta"
-              rows="6"
-              required
-              placeholder="Necesito saber ..."
-            ></textarea>
+            <label for="tour">Tour</label>
+            <select id="tour" name="tour" required>
+              <option value="">Selecciona un tour</option>
+              <option value="rio">🌊 Paseo por el Río Piura</option>
+              <option value="catacaos">🎨 Tour nocturno en Catacaos</option>
+              <option value="gastro">🍽 Ruta gastronómica</option>
+              <option value="glamping">🏜 Glamping en Sechura</option>
+            </select>
           </div>
-          <button type="submit" class="btn btn-primary btn-lg btn-block">Enviar consulta</button>
+          <button type="submit" class="btn btn-primary btn-lg btn-block">Reservar</button>
           <p class="form-status" id="formStatus"></p>
         </form>
       </div>
