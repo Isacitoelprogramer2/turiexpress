@@ -106,28 +106,49 @@
   /* ---------- Formulario de reserva ---------- */
   const form = document.getElementById('reserveForm');
   const status = document.getElementById('formStatus');
-  const dateInput = document.getElementById('date');
 
-  if (dateInput) {
-    // Fecha mínima = hoy
-    const today = new Date().toISOString().split('T')[0];
-    dateInput.setAttribute('min', today);
+  async function sendReserva(data) {
+    try {
+      const app = firebase.app();
+      const functions = firebase.functions();
+      const enviarReserva = functions.httpsCallable('enviarReserva');
+      const result = await enviarReserva(data);
+      return result.data;
+    } catch (err) {
+      console.error('Error enviando reserva:', err);
+      throw err;
+    }
   }
 
   if (form && status) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const data = Object.fromEntries(new FormData(form).entries());
 
-      // Validación simple
-      if (!data.name || !data.email || !data.phone || !data.tour || !data.date) {
-        status.textContent = '⚠ Por favor completa todos los campos.';
+      // Validación simple con mensajes específicos
+      if (!data.name || !String(data.name).trim()) {
+        status.textContent = '⚠ Ingresa tu nombre.';
         status.className = 'form-status error';
         return;
       }
-      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email);
+      if (!data.email || !String(data.email).trim()) {
+        status.textContent = '⚠ Ingresa tu correo electrónico.';
+        status.className = 'form-status error';
+        return;
+      }
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(data.email));
       if (!emailOk) {
         status.textContent = '⚠ Ingresa un correo válido.';
+        status.className = 'form-status error';
+        return;
+      }
+      if (!data.phone || !String(data.phone).trim()) {
+        status.textContent = '⚠ Ingresa tu teléfono.';
+        status.className = 'form-status error';
+        return;
+      }
+      if (!data.tour || !String(data.tour).trim()) {
+        status.textContent = '⚠ Selecciona un tour.';
         status.className = 'form-status error';
         return;
       }
@@ -135,29 +156,22 @@
       status.textContent = '⏳ Enviando tu reserva...';
       status.className = 'form-status';
 
-      // Simulación de envío. Para hacerlo real, conecta con Cloud Functions:
-      //   import { getFunctions, httpsCallable } from 'firebase/app';
-      //   const sendReserva = httpsCallable(functions, 'sendReserva');
-      //   await sendReserva(data);
-      setTimeout(() => {
-        status.textContent = '✅ ¡Reserva recibida! Te contactaremos por WhatsApp en menos de 24h.';
+      try {
+        const response = await sendReserva({
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          tour: data.tour,
+        });
+
+        status.textContent = `✅ ${response.message || '¡Reserva enviada! Te contactaremos pronto.'}`;
         status.className = 'form-status success';
         form.reset();
-
-        // Mensaje de WhatsApp precargado
-        const tours = {
-          rio: 'Paseo por el Río Piura',
-          catacaos: 'Tour nocturno en Catacaos',
-          gastro: 'Ruta gastronómica',
-          glamping: 'Glamping en Sechura',
-        };
-        const tourName = tours[data.tour] || data.tour;
-        const msg = encodeURIComponent(
-          `Hola Turiexpress! 👋\n\nQuiero reservar:\n• Tour: ${tourName}\n• Fecha: ${data.date}\n• Nombre: ${data.name}\n• Tel: ${data.phone}\n• Correo: ${data.email}`
-        );
-        // No abrir automáticamente para no saturar. El usuario lo hace manual si quiere.
-        // window.open(`https://wa.me/51999999999?text=${msg}`, '_blank');
-      }, 900);
+      } catch (err) {
+        const message = err?.message || 'No se pudo enviar la reserva. Inténtalo de nuevo.';
+        status.textContent = `⚠ ${message}`;
+        status.className = 'form-status error';
+      }
     });
   }
 
