@@ -757,15 +757,28 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .form-group select {
   font-family: inherit;
   font-size: 0.95rem;
-  padding: 0.75rem 1rem;
+  padding: 0.55rem 1rem;
   border: 2px solid var(--border);
   border-radius: var(--radius);
   background: var(--bg);
   color: var(--text);
   transition: var(--transition);
 }
+.form-group textarea {
+  font-family: inherit;
+  font-size: 0.95rem;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+  transition: var(--transition);
+  resize: vertical;
+  min-height: 7rem;
+}
 .form-group input:focus,
-.form-group select:focus {
+.form-group select:focus,
+.form-group textarea:focus {
   outline: none;
   border-color: var(--accent);
   background: var(--white);
