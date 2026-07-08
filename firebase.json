@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "turiexpress-site",
     "public": "public",
     "ignore": [
       "firebase.json",
