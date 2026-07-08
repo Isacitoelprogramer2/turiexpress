@@ -278,6 +278,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   gap: 3rem;
   flex-wrap: wrap;
 }
+.hero-cta {
+  margin-top: 2rem;
+}
 .hero-stat strong {
   display: block;
   font-family: var(--font-display);
@@ -823,12 +826,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   justify-content: center;
   background: rgba(255, 255, 255, 0.08);
   border-radius: 50%;
-  font-size: 1.1rem;
   transition: var(--transition);
+  overflow: hidden;
 }
-.social-btn:hover { background: var(--accent); transform: translateY(-3px); }
-.social-btn.whatsapp { background: #25d366; }
-.social-btn.whatsapp:hover { background: #1fb257; }
+.social-btn:hover { background: rgba(255, 255, 255, 0.18); transform: translateY(-3px); }
+.social-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 .footer-bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding: 1.5rem 0;
