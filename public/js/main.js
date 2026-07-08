@@ -108,16 +108,27 @@
   const status = document.getElementById('formStatus');
 
   async function sendReserva(data) {
+    const functionUrl = 'https://us-central1-balance-food-landing.cloudfunctions.net/enviarReserva';
+    const response = await fetch(functionUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ data }),
+    });
+
+    const responseText = await response.text();
+    let result;
     try {
-      const app = firebase.app();
-      const functions = firebase.functions();
-      const enviarReserva = functions.httpsCallable('enviarReserva');
-      const result = await enviarReserva(data);
-      return result.data;
-    } catch (err) {
-      console.error('Error enviando reserva:', err);
-      throw err;
+      result = JSON.parse(responseText);
+    } catch {
+      throw new Error('Respuesta inesperada del servidor.');
     }
+
+    if (!response.ok || result.error) {
+      const message = result.error?.message || 'No se pudo enviar la reserva.';
+      throw new Error(message);
+    }
+
+    return result.result || result;
   }
 
   if (form && status) {

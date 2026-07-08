@@ -38,6 +38,7 @@ function validarCampos(body: ReservaBody): string | null {
 }
 
 export const enviarReserva = functions
+  .region('us-central1')
   .runWith({ secrets: [RESEND_API_KEY] })
   .https.onCall(async (data, context): Promise<{ ok: boolean; message: string }> => {
     const body = data as ReservaBody;
